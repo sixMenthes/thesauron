@@ -8,4 +8,4 @@ def extractContext(sentence: conll.sentence, word: token):
     else: 
         bigram2 = None    
     return bigram1, bigram2
-
+# hey leo how are you?
