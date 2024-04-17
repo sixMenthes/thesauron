@@ -19,22 +19,36 @@ def conlluReader (path: str) -> list:
 
 def dictBuilder (text: list):
     #returns a dictionary of dictionaries. Keys are words, values are dicts of <keys = contexts, values = counts>
-    fellowship = dict
+    fellowship = dict()
     for index, word in enumerate(text):
+        fellowship.setdefault(word, dict())
+        #print(index)
+
         if (index == 0) or (text[index-1] == ''):
 
-            fellowship.update
-            fellowship.get(word, {text[index+1]: 1})
-            fellowship.setdefault()
+            #print('word = ' + word)
+            fellowship[word][(+1, text[index+1])] = fellowship[word].get(('+1', text[index+1]), 0) + 1
 
         if (index == -1) or (text[index+1] == ''):
-            ##
+
+            fellowship[word][(-1, text[index-1])] = fellowship[word].get(('-1', text[index-1]), 0) + 1
+
         else :
-            ###
+            fellowship[word][(+1, text[index+1])] = fellowship[word].get(('+1', text[index+1]), 0) + 1
+            fellowship[word][(-1, text[index-1])] = fellowship[word].get(('-1', text[index-1]), 0) + 1
+    
+    return fellowship
 
 
-conllu_doc = input()
-conlluReader(conllu_doc)
+
+
+conllu_doc = '/Users/leo/LIL3S2/projet_tal/estrepublicain.extrait-aa.19998.outmalt'
+processed_text = conlluReader(conllu_doc)
+#print(processed_text[19996], processed_text[19997], processed_text[19998])
+print(processed_text)
+#test_dict = dictBuilder(processed_text)
+
+#print(test_dict)
 
         
 
