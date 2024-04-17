@@ -1,21 +1,21 @@
 '''
-I believe for now we just wanna keep the lemmas, right ? This is pretty sketchy, but we will make it prettier. The idea is 
-to output a list of lemmas following the order of the words in the document est-republicain. each sentence is separated by an empty string. 
+We start by importing Sam, who'll carry all the important stuff ! Sam.index gives the index in the sentence, Sam.lemma gives the lemma...
 '''
+from sam import Sam
 
-def extractLemma(line:str):
-    return line.split('\t')[2]
 
-with open('/Users/leo/LIL3S2/projet_tal/estrepublicain.extrait-aa.19998.outmalt', "r") as conllu:
+def andMyAxe(window: int, cur_word: Sam, text: list, dictionary: dict):
+    for idx, word  
+    return 
     
 
+def andMyBow(lookaround = 1):
 
-def conlluReader (path: str) -> list:
-    #outputs a list of strings. Each member is a lemma following the order of the corpus sentences. Each sentence of the corpus is separated by an empty string.
-    with open(path, "r") as conllu:
-        post_text = []
-        for token in conllu.read().split("\n"):
-            post_text.append(extractLemma(token))
-    return post_text 
+    fellowship = dict()
+
+    with open('/Users/leo/LIL3S2/projet_tal/estrepublicain.extrait-aa.19998.outmalt', "r") as conllu:
+        text = conllu.read().split("\n").remove('')
+        for idx, line in enumerate(text):
+            cur_word = Sam(line)
 
 
