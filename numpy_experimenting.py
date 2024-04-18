@@ -81,8 +81,6 @@ def isildursHeir(fellowship, the_ring):
     return ofTheKing
 
 
-
-
 with open('/Users/atillaarslan/projettal/estrepublicain.extrait-aa.19998.outmalt', "r") as conllu:
     text = Shire(conllu.read())
 
