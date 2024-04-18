@@ -69,9 +69,13 @@ def andmyBOW(sentence: list, fellowship: dict, the_ring: set, bow= 2):
     return fellowship, the_ring
 
 def isildursHeir(fellowship, the_ring):
+    context_to_index = {context: i for i, context in enumerate(sorted(the_ring))}
+
     ofTheKing = np.zeros((len(fellowship), len(the_ring)))
+
     for i, (word, context_dict) in enumerate(fellowship.items()):
-        for j, (context, count) in enumerate(context_dict.items()):
+        for context, count in sorted(context_dict.items()):
+            j = context_to_index[context]
             ofTheKing[i, j] = count
 
     return ofTheKing
