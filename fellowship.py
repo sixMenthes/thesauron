@@ -45,15 +45,19 @@ def andmyBOW(sentence: list, fellowship: dict, the_ring: dict, bow= 2, lookbehin
 
 ''''''
 
-""" def minesOfMoria (fellowship: dict, the_ring: dict):
+def minesOfMoria (fellowship: dict, the_ring: dict):
 
     name_matrix = []
     verb_matrix = []
     adj_matrix = []
     adv_matrix = []
 
-
-
+    matricesOfMoria = {
+        'N': name_matrix,
+        'V': verb_matrix,
+        'A': adj_matrix, 
+        'ADV': adv_matrix
+    }
 
     for word in fellowship.keys():
         word_vec = np.zeros(len(the_ring[word.category]))
@@ -62,32 +66,18 @@ def andmyBOW(sentence: list, fellowship: dict, the_ring: dict, bow= 2, lookbehin
                 word_vec[idx] = fellowship[word][context]
             else:
                 word_vec[idx] = 0
-        Aragorn.append(word_vec)
+        matricesOfMoria[word.category].append(word_vec)
 
-        matricesOfMoria = {
-        'names': name_matrix,
-        'verbs': verb_matrix,
-        'adjectives': adj_matrix, 
-        'adverbs': adv_matrix
-    }
- """
-
-# def isildursHeir (fellowship: dict, the_ring: dict):
-
-#     Aragorn = []
-
-#     for word in fellowship.keys():
-#         word_vec = np.zeros(len(the_ring))
-#         for idx, context in enumerate(the_ring[word.category]):
-#             if context in fellowship[word].keys():
-#                 word_vec[idx] = fellowship[word][context]
-#             else:
-#                 word_vec[idx] = 0
-#         Aragorn.append(word_vec)
+    for matrix in matricesOfMoria.values():
+        np.stack(matrix, axis=1)
     
-#     ofTheKing = np.stack(Aragorn, axis=1)
+    return matricesOfMoria
 
-#     return ofTheKing
+
+def balrogMultiplication(word_matrices: dict):
+    for matrix in word_matrices.keys:
+        word_matrices[matrix] = matrix @ matrix.T
+    return word_matrices
 
 
 
@@ -99,4 +89,5 @@ fellowship = {}
 for sentence in text.sentences:
     andmyBOW(sentence, fellowship, the_ring)
 
-print(len(fellowship.keys()))
+resultingMatrices = balrogMultiplication(minesOfMoria(fellowship, the_ring))
+
