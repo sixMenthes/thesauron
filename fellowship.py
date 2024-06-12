@@ -18,6 +18,7 @@ the_ring = {
 
 '''We're gonna output 4 thesauri : one for verbs, one for names, one for adjectives and one for verbs. 
 This function reads a conllu sentence and, for each word (Sam object containing the conllu attributes)'''
+
 def andmyBOW(sentence: list, fellowship: dict, the_ring: dict, bow= 2, lookbehind= True):
     
     for idx, cur_word in enumerate(sentence):
@@ -44,8 +45,16 @@ def andmyBOW(sentence: list, fellowship: dict, the_ring: dict, bow= 2, lookbehin
 
 ''''''
 
-def minesOfMoria (fellowship: dict, the_ring: dict):
-    Aragorn = []
+""" def minesOfMoria (fellowship: dict, the_ring: dict):
+
+    name_matrix = []
+    verb_matrix = []
+    adj_matrix = []
+    adv_matrix = []
+
+
+
+
     for word in fellowship.keys():
         word_vec = np.zeros(len(the_ring[word.category]))
         for idx, context in enumerate(the_ring[word.category]):
@@ -55,6 +64,13 @@ def minesOfMoria (fellowship: dict, the_ring: dict):
                 word_vec[idx] = 0
         Aragorn.append(word_vec)
 
+        matricesOfMoria = {
+        'names': name_matrix,
+        'verbs': verb_matrix,
+        'adjectives': adj_matrix, 
+        'adverbs': adv_matrix
+    }
+ """
 
 # def isildursHeir (fellowship: dict, the_ring: dict):
 
