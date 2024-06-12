@@ -33,13 +33,14 @@ def isildursHeir (fellowship: dict, the_ring: set):
     the_ring = list(the_ring)
 
     for word in fellowship.keys():
+        #print(word)
         word_vec = np.zeros(len(the_ring))
         for idx, context in enumerate(the_ring):
             if context in fellowship[word].keys():
                 word_vec[idx] = fellowship[word][context]
             else:
                 word_vec[idx] = 0
-            Aragorn.append(word_vec)
+        Aragorn.append(word_vec)
     
     ofTheKing = np.stack(Aragorn, axis=1)
 
@@ -57,7 +58,12 @@ the_ring = set()
 for sentence in text.sentences:
     andmyBOW(sentence, fellowship, the_ring, bow= 2)
 
-ofTheKing = isildursHeir(fellowship, the_ring)
-print(ofTheKing.shape)
+ofTheKing = isildursHeir(fellowship, the_ring)    
+
+#print(fellowship)
+#print(the_ring)
+np.set_printoptions(threshold=np.inf)
+print(ofTheKing[1])
+
 
 
