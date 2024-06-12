@@ -6,8 +6,10 @@ class Sam:
             self.index = self.data[0]
             self.true = self.data[1]
             self.lemma = self.data [2]
+            self.category = self.data [3]
         else : 
-            self.lemma = line    
+            self.lemma = line
+            self.category = 'undef'    
         
 
 class Shire:
