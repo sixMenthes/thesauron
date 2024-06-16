@@ -1,93 +1,34 @@
-'''
-We start by importing Sam, who'll carry all the important stuff ! Sam.index gives the index in the sentence, Sam.lemma gives the lemma...
-'''
-from hobbiton import Shire, Sam
-import numpy as np
+import os
+from hobbiton import Token
+from councilOfElrond import DictionaryBuilder
 
-verbs = set()
-names = set()
-adjectives = set()
-adverbs = set()
 
-the_ring = {
-    'V': verbs,
-    'N': names,
-    'A': adjectives,
-    'ADV': adverbs
-}
+def main(files: list):
 
-'''We're gonna output 4 thesauri : one for verbs, one for names, one for adjectives and one for verbs. 
-This function reads a conllu sentence and, for each word (Sam object containing the conllu attributes)'''
+    for file in files:
 
-def andmyBOW(sentence: list, fellowship: dict, the_ring: dict, bow= 2, lookbehind= True):
+            with open(file, "r") as file:
+
+                line = file.readline()
+                sentence = []
+                dictionary = DictionaryBuilder()
+
+                while line != '':
+                    sentence.append(Token(line))
+                    line = file.readline() 
+                    if line == '\n':
+                        dictionary.insertAndIncrease(sentence)
+                        sentence = []
+                        line = file.readline() 
+
+
+    return dictionary
     
-    for idx, cur_word in enumerate(sentence):
-        if cur_word.category in the_ring.keys():
-            fellowship.setdefault(cur_word, dict())
 
-            prev_idx = 1
-            post_idx = 1
+directory_path = '/Users/leo/LIL3S2/projet_tal/corpora/test_corpus'
+files = [os.path.join(directory_path, file_name) for file_name in os.listdir(directory_path) if os.path.isfile(os.path.join(directory_path, file_name))]
 
-            if lookbehind == True:
-                while prev_idx <= bow:
-                    context = (f"-{prev_idx}", sentence[idx - prev_idx])
-                    the_ring[cur_word.category].add(context)
-                    fellowship[cur_word][context] = fellowship[cur_word].get(context, 0) + 1
-                    prev_idx += 1 
+dictionary = main(files)
 
-            while post_idx <= bow:
-                context = (f"+{post_idx}", sentence[idx + post_idx])
-                the_ring[cur_word.category].add(context)
-                fellowship[cur_word][context] = fellowship[cur_word].get(context, 0) + 1
-                post_idx += 1
-
-    return fellowship, the_ring
-
-''''''
-
-def minesOfMoria (fellowship: dict, the_ring: dict):
-
-    name_matrix = []
-    verb_matrix = []
-    adj_matrix = []
-    adv_matrix = []
-
-    matricesOfMoria = {
-        'N': name_matrix,
-        'V': verb_matrix,
-        'A': adj_matrix, 
-        'ADV': adv_matrix
-    }
-
-    for word in fellowship.keys():
-        word_vec = np.zeros(len(the_ring[word.category]))
-        for idx, context in enumerate(the_ring[word.category]):
-            if context in fellowship[word].keys():
-                word_vec[idx] = fellowship[word][context]
-            else:
-                word_vec[idx] = 0
-        matricesOfMoria[word.category].append(word_vec)
-
-    for matrix in matricesOfMoria.values():
-        np.stack(matrix, axis=1)
-    
-    return matricesOfMoria
-
-
-def balrogMultiplication(word_matrices: dict):
-    for matrix in word_matrices.keys:
-        word_matrices[matrix] = matrix @ matrix.T
-    return word_matrices
-
-
-
-with open('/Users/leo/LIL3S2/projet_tal/estrepublicain.extrait-aa.19998.outmalt', "r") as conllu:
-    text = Shire(conllu.read())
-
-fellowship = {}
-
-for sentence in text.sentences:
-    andmyBOW(sentence, fellowship, the_ring)
-
-resultingMatrices = balrogMultiplication(minesOfMoria(fellowship, the_ring))
+print(len(dictionary.ctxt))
 
