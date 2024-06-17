@@ -2,7 +2,6 @@ import numpy as np
 from scipy import sparse
 from scipy.sparse.linalg import norm
 from tqdm import tqdm
-from hobbiton import Token
 
 
 class MatrixBuilding:
@@ -47,8 +46,10 @@ class MatrixBuilding:
             for idx, context in enumerate(posSet[word.cat]):
 
                 if context in dictionary[word]:
-                    word_vec[idx] = dictionary[word][context]
-                
+                    word_vec[idx] = dictionary[word][context]/sum(dictionary[word].values())
+
+
+               
                 else:
                     word_vec[idx] = 0
             
@@ -60,10 +61,6 @@ class MatrixBuilding:
         return self.word_matrices
     
     
-    # def pmiWeight(word: Token, ctxt_dict: dict, ctxt_set: dict):
-    #     wd_context_value = ctxt_dict
-
-
     def multiplyMatrices(self):
 
         for matrix in tqdm(self.word_matrices.keys(), desc= 'multiplying matrices'):
@@ -89,15 +86,22 @@ class MatrixBuilding:
     
     def findNeighbors(self, word:str, categorie: str):
 
-        word_idx = self.word_lists[categorie].index(word)
+        if word in self.word_lists[categorie]:
 
-        neighbor_list = list(self.word_matrices[categorie][word_idx])
+            word_idx = self.word_lists[categorie].index(word)
 
-        word_to_coeff = list(zip(self.word_lists[categorie], neighbor_list))
+            neighbor_list = list(self.word_matrices[categorie][word_idx])
 
-        sorted_list = sorted(word_to_coeff, key=lambda x: x[1], reverse=True)
+            word_to_coeff = list(zip(self.word_lists[categorie], neighbor_list))
 
-        print(sorted_list[:10])
+            sorted_list = sorted(word_to_coeff, key=lambda x: x[1], reverse=True)
+
+            print(sorted_list[:5])
+        
+        else:
+            print("NOT FOUND")
+
+        
 
 
 

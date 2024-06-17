@@ -34,20 +34,60 @@ def main(files: list, lookbehind: bool, window= 2):
 
 
 
-directory_path = '/Users/leo/LIL3S2/projet_tal/corpora/test_corpus'
+directory_path = input(str('input path please papá'))
 files = [os.path.join(directory_path, file_name) for file_name in os.listdir(directory_path) if os.path.isfile(os.path.join(directory_path, file_name))]
 
 dictionary = main(files, 2, True)
 matrices = MatrixBuilding()
 matrices.fillMatrices(dictionary.ctxt, dictionary.pos)
 matrices.multiplyMatrices()
-matrices.findNeighbors('galère', 'N')
+
+print(f"Les synonymes de 'force' sont: ")
+matrices.findNeighbors('force', 'N')
+
+print(f"Les synonymes de 'ami' sont: ")
+matrices.findNeighbors('ami', 'N')
+
+print(f"Les synonymes de 'tuer' sont: ")
+matrices.findNeighbors('tuer', 'V')
+
+print(f"Les synonymes de 'vieux' sont: ")
+matrices.findNeighbors('vieux', 'A')
+
+print(f"Les synonymes de 'lentement' sont: ")
+matrices.findNeighbors('lentement', 'ADV')
+
+print(f"Les synonymes de 'jouer' sont: ")
+matrices.findNeighbors('jouer', 'V')
+
+print(f"Les synonymes de 'fils' sont: ")
+matrices.findNeighbors('fils', 'N')
+
+print(f"Les synonymes de 'suspect' sont: ")
+matrices.findNeighbors('suspect', 'N')
+
+print(f"Les synonymes de 'gagner' sont: ")
+matrices.findNeighbors('gagner', 'V')
+
+print(f"Les synonymes de 'beau' sont: ")
+matrices.findNeighbors('beau', 'A')
+
+print(f"Les synonymes de 'subrepticement' sont: ")
+matrices.findNeighbors('subrepticement', 'ADV')
+
+print(f"Les synonymes de 'fuir' sont: ")
+matrices.findNeighbors('fuir', 'V')
+
+
+
+
+
 
 # for key, ctxt in dictionary.ctxt.items():
 #     print (key.lemma)
 #     for ctxtkey, ctxtcontent in ctxt:
 #         print(f"\t {ctxtkey}: {ctxtcontent.lemma}")
 
-print(len(dictionary.ctxt.keys()))
+print(f"taille dico: {len(dictionary.ctxt.keys())}")
 
 

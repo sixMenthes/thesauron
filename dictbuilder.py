@@ -1,6 +1,8 @@
 from hobbiton import Token
 
-class DictionaryBuilder:
+
+
+class DictionaryBuilding:
 
     def __init__ (self):
 
