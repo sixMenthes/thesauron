@@ -41,6 +41,7 @@ dictionary = main(files, 2, True)
 matrices = MatrixBuilding()
 matrices.fillMatrices(dictionary.ctxt, dictionary.pos)
 matrices.multiplyMatrices()
+matrices.findNeighbors('galère', 'N')
 
 # for key, ctxt in dictionary.ctxt.items():
 #     print (key.lemma)
