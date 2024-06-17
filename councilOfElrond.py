@@ -17,7 +17,7 @@ class DictionaryBuilder:
         }
 
         self.ctxt = {}
-        #self.counts = {}
+        self.counts = {}
             
                     
     
@@ -41,16 +41,38 @@ class DictionaryBuilder:
             self.ctxt[cur_word][context] = self.ctxt[cur_word].get(context, 0) + 1
             post_idx += 1
 
-    def buildDict(self, sentence: list, fsw= 2, lookbehind= True):
+
+
+    def buildDict(self, sentence: list, fsw: int, lookbehind= True):
+
+        if len(self.ctxt.keys()) < 60000:
+
+            sentence = [Token('<d>')] * fsw + sentence + [Token('<f>')] * fsw
+
+            for cur_idx, cur_word in enumerate(sentence):
+
+                if cur_word.cat in self.pos.keys():
+
+                    self.ctxt.setdefault(cur_word, dict())
+                    self.counts[cur_word] = self.counts.get(cur_word, 0) + 1
+                    self.lookforwardFun(cur_word, cur_idx, sentence, fsw)
+
+                    if lookbehind == True:
+
+                        self.lookbehindFun(cur_word, cur_idx, sentence, fsw)
+        else:
+            self.increaseDict(sentence, fsw, lookbehind)
+            
+    
+    def increaseDict(self, sentence: list, fsw: int, lookbehind= True):
 
         sentence = [Token('<d>')] * fsw + sentence + [Token('<f>')] * fsw
 
         for cur_idx, cur_word in enumerate(sentence):
 
-            if cur_word.cat in self.pos.keys():
+            if (cur_word.cat in self.pos.keys()) and (cur_word in self.ctxt.keys()):
 
-                self.ctxt.setdefault(cur_word, dict())
-                #self.counts[cur_word] = self.counts.get(cur_word, 0) + 1
+                self.counts[cur_word] = self.counts.get(cur_word, 0) + 1
                 self.lookforwardFun(cur_word, cur_idx, sentence, fsw)
 
                 if lookbehind == True:
@@ -59,46 +81,11 @@ class DictionaryBuilder:
                 
 
 
- 
-
-
-    def insertAndIncrease(self, sentence: list, fsw= 2, lookbehind= True):
-
-        for idx, cur_word in enumerate(sentence):
-            
-            if cur_word.cat in self.pos.keys():
-
-                self.ctxt.setdefault(cur_word, dict())
-                self.counts[cur_word] = self.counts.get(cur_word, 0) + 1
-
-                self.lookforwardFun(self, cur_word, idx, sentence, fsw)
-                
-                if lookbehind == True:
-
-                    self.lookbehindFun(self, cur_word, idx, sentence, fsw)
-
-
-    def increase(self, sentence: list, fsw= 2, lookbehind= True):
-
-        for idx, cur_word in enumerate(sentence):
-            
-            if cur_word in self.counts.keys():
-                self.counts[cur_word] = self.counts.get(cur_word, 0) + 1
-
-                self.lookforwardFun(self, cur_word, idx, sentence, fsw)
-                
-                if lookbehind == True:
-
-                    self.lookbehindFun(self, cur_word, idx, sentence, fsw)
-
-
-    
-
-
     def keepHundred(self, threshold: int):
         keys_to_remove = [word for word, count in self.counts.items() if count < threshold]
         for key in keys_to_remove:
             del self.ctxt[key]
+            del self.counts[key]
 
 
 
