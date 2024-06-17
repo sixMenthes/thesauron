@@ -79,12 +79,18 @@ class MatrixBuilding:
             product = row_normalized_matrix @ inverse_matrix
 
             self.word_matrices[matrix] = product.todense()
+
+            np.save(matrix, self.word_matrices[matrix])
+
             print(self.word_matrices[matrix].shape)
 
         return self.word_matrices
     
     
     def findNeighbors(self, word:str, categorie: str):
+
+        for matrix in self.word_matrices.keys():
+            np. 
 
         if word in self.word_lists[categorie]:
 

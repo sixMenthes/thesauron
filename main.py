@@ -1,15 +1,15 @@
 #!/Users/leo/virtualenvs/bin/python3
 
 import os
-from hobbiton import Token
-from councilOfElrond import DictionaryBuilder
+from tokenbuilder import Token
+from dictbuilder import DictionaryBuilding
 from tqdm import tqdm
-from khazadDum import MatrixBuilding
+from matrixbuilder import MatrixBuilding
 
 
-def main(files: list, lookbehind: bool, window= 2):
+def mainDict(files: list, lookbehind: bool, window= 2):
 
-    dictionary = DictionaryBuilder()
+    dictionary = DictionaryBuilding()
 
     for file in tqdm(files, desc= 'Creating Dict'):
 
@@ -32,15 +32,23 @@ def main(files: list, lookbehind: bool, window= 2):
 
     return dictionary
 
+def mainMatrices(dictionary: DictionaryBuilding):
+    
+    matrices = MatrixBuilding()
+    matrices.fillMatrices(dictionary.ctxt, dictionary.pos)
+    matrices.multiplyMatrices()
+
+    return matrices
+
 
 
 directory_path = input(str('input path please papá'))
 files = [os.path.join(directory_path, file_name) for file_name in os.listdir(directory_path) if os.path.isfile(os.path.join(directory_path, file_name))]
 
-dictionary = main(files, 2, True)
-matrices = MatrixBuilding()
-matrices.fillMatrices(dictionary.ctxt, dictionary.pos)
-matrices.multiplyMatrices()
+dictionary = mainDict(files, 2, True)
+matrices = mainMatrices(dictionary)
+
+
 
 print(f"Les synonymes de 'force' sont: ")
 matrices.findNeighbors('force', 'N')
