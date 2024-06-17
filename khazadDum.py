@@ -1,6 +1,6 @@
 import numpy as np
 
-def minesOfMoria (fellowship: dict, the_ring: dict):
+def minesOfMoria (dictionary: dict, posSet: dict):
 
     name_matrix = []
     verb_matrix = []
@@ -14,11 +14,11 @@ def minesOfMoria (fellowship: dict, the_ring: dict):
         'ADV': adv_matrix
     }
 
-    for word in fellowship.keys():
-        word_vec = np.zeros(len(the_ring[word.category]))
-        for idx, context in enumerate(the_ring[word.category]):
-            if context in fellowship[word].keys():
-                word_vec[idx] = fellowship[word][context]
+    for word in dictionary.keys():
+        word_vec = np.zeros(len(posSet[word.category]))
+        for idx, context in enumerate(posSet[word.category]):
+            if context in dictionary[word].keys():
+                word_vec[idx] = dictionary[word][context]
             else:
                 word_vec[idx] = 0
         matricesOfMoria[word.category].append(word_vec)
