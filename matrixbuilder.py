@@ -147,18 +147,7 @@ class MatrixBuilding:
         if (word1_tokenized in self.word_nlists[category]) and (word2_tokenized in self.word_nlists[category]):
             word1_idx = self.word_nlists[category].index(word1_tokenized)
             word2_idx = self.word_nlists[category].index(word2_tokenized)
+
+            return np.around(self.matrices[category][word1_idx][word2_idx], decimals= 2)
         
-            print(word1 + ' ' + word2 + ' : ' + self.matrices[category][word1_idx][word2_idx])
-        else:
-            print("NOT FOUND \n" + word1 + " " + (word1_tokenized in self.word_nlists[category]) + '\n' + word2 + " " + (word2_tokenized in self.word_nlists[category]))
-
-    
-
-        
-
-
-
-
-
-    
-    
+        else: return(0)

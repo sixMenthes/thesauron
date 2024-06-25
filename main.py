@@ -67,7 +67,37 @@ def voisins(word: str, category: str): #Cette fonction ne sert qu'à renommer po
 dictionary = mainDict(files, fixed_size_window, dict_max_size, lookbehind)
 matrices = mainMatrices(dictionary, weight_function)
 
+"EVALUATION"
 
+def buildDatasets(path: str, matrices: MatrixBuilding):
+    dataset_human = []
+    dataset_machine = []
+
+    with open(path) as file:
+        dataset = file.read()
+           
+        for line in dataset.split("\n"):
+            if line != '':
+                line_list = line.split(" ")
+                dataset_human.append(float(line_list[2]))
+                dataset_machine.append(matrices.findCoefficient(line_list[0], line_list[1], "N"))
+
+    return dataset_human, dataset_machine
+
+thesaurus_dist, human_survey = buildDatasets("/Users/leo/LIL3S2/projet_tal/rg65_french.txt", matrices)
+
+import numpy as np
+from scipy.stats import spearmanr
+
+corr_coef, p_value = spearmanr(thesaurus_dist, human_survey)
+
+print(f"Spearman's correlation coeff: {corr_coef:.4f}")
+print(f"P-value: {p_value:.4f}")
+
+if p_value <= 0.05:
+    print(" There is a significant correlation between the thesaurus distribution and the human survey.")
+else:
+    print("There is not enough evidence to suggest a significant correlation between the thesaurus distribution and the human survey.")
 
 
 
