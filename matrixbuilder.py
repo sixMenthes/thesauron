@@ -137,6 +137,23 @@ class MatrixBuilding:
         else:
             print("NOT FOUND")
 
+    def findCoefficient(self, word1: str, word2: str, category: str):
+        word1_tokenized = Token('')
+        word2_tokenized = Token('')
+
+        word1_tokenized.init_for_search(word1, category)
+        word2_tokenized.init_for_search(word2, category)
+
+        if (word1_tokenized in self.word_nlists[category]) and (word2_tokenized in self.word_nlists[category]):
+            word1_idx = self.word_nlists[category].index(word1_tokenized)
+            word2_idx = self.word_nlists[category].index(word2_tokenized)
+        
+            print(word1 + ' ' + word2 + ' : ' + self.matrices[category][word1_idx][word2_idx])
+        else:
+            print("NOT FOUND \n" + word1 + " " + (word1_tokenized in self.word_nlists[category]) + '\n' + word2 + " " + (word2_tokenized in self.word_nlists[category]))
+
+    
+
         
 
 

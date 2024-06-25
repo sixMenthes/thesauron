@@ -64,7 +64,7 @@ class DictionaryBuilding:
             self.ctxt[cur_word][context] = self.ctxt[cur_word].get(context, 0) + 1 #update the word:contexs:counts dictionary
             post_idx += 1
 
-    
+
     """buildDict and increaseDict make very similar stuff, the only difference beeing that increaseDict doesn't add new word entries to the context dictionary. """
 
 

@@ -64,9 +64,13 @@ def voisins(word: str, category: str): #Cette fonction ne sert qu'à renommer po
     
     return matrices.findNeighbors(word, category)
 
-
 dictionary = mainDict(files, fixed_size_window, dict_max_size, lookbehind)
 matrices = mainMatrices(dictionary, weight_function)
+
+
+
+
+
 
 
 
